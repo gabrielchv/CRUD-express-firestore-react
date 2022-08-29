@@ -7,13 +7,15 @@ require("dotenv").config();
 
 // Firebase
 import admin from "firebase-admin";
-const serviceAccount = require("../teppadev-gabrielchv-firebase-adminsdk-4p3gg-93abdfbdf5.json");
+
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(
+    JSON.parse(process.env.GOOGLE_AUTH || "{}")
+  ),
 });
 const db = admin.firestore();
 
-// Express
+// Express config
 const app = express();
 app.use(express.static(path.join(__dirname, "../frontend/build")));
 app.use(bodyParser.json());
